@@ -1,0 +1,122 @@
+
+<style>
+  .pg-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .pg-table th { background: var(--color-background-secondary); color: var(--color-text-secondary); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--color-border-primary); }
+  .pg-table td { padding: 7px 12px; border-bottom: 1px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: middle; }
+  .pg-table tr:last-child td { border-bottom: none; }
+  .pg-table tr:hover td { background: var(--color-background-secondary); }
+  .cat-header td { background: var(--color-background-secondary); font-weight: 500; font-size: 12px; color: var(--color-text-secondary); padding: 5px 12px; border-bottom: 1px solid var(--color-border-secondary); }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .badge-num   { background: #E6F1FB; color: #0C447C; }
+  .badge-str   { background: #E1F5EE; color: #085041; }
+  .badge-date  { background: #FAEEDA; color: #633806; }
+  .badge-bool  { background: #EEEDFE; color: #3C3489; }
+  .badge-bin   { background: #FAECE7; color: #712B13; }
+  .badge-net   { background: #FBEAF0; color: #72243E; }
+  .badge-json  { background: #EAF3DE; color: #27500A; }
+  .badge-geo   { background: #FCEBEB; color: #791F1F; }
+  .badge-spec  { background: #F1EFE8; color: #444441; }
+  @media (prefers-color-scheme: dark) {
+    .badge-num  { background: #0C447C; color: #B5D4F4; }
+    .badge-str  { background: #085041; color: #9FE1CB; }
+    .badge-date { background: #633806; color: #FAC775; }
+    .badge-bool { background: #3C3489; color: #CECBF6; }
+    .badge-bin  { background: #712B13; color: #F5C4B3; }
+    .badge-net  { background: #72243E; color: #F4C0D1; }
+    .badge-json { background: #27500A; color: #C0DD97; }
+    .badge-geo  { background: #791F1F; color: #F7C1C1; }
+    .badge-spec { background: #444441; color: #D3D1C7; }
+  }
+  code { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); }
+  .search-box { width: 100%; box-sizing: border-box; padding: 7px 12px; border: 1px solid var(--color-border-secondary); border-radius: 8px; font-size: 13px; background: var(--color-background-primary); color: var(--color-text-primary); margin-bottom: 12px; outline: none; }
+  .search-box:focus { border-color: var(--color-border-primary); }
+  .hidden { display: none; }
+</style>
+
+<input class="search-box" type="text" placeholder="Buscar tipo de dato..." oninput="filtrar(this.value)">
+
+<table class="pg-table" id="tabla">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Categoría</th>
+      <th>Uso</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="cat-header"><td colspan="4">Numéricos</td></tr>
+    <tr data-cat="num"><td><code>smallint</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros pequeños (-32768 a 32767). Ahorra espacio.</td><td><code>edad SMALLINT</code></td></tr>
+    <tr data-cat="num"><td><code>integer</code> / <code>int</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros estándar. El más usado para IDs y contadores.</td><td><code>id INT</code></td></tr>
+    <tr data-cat="num"><td><code>bigint</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros muy grandes. Para IDs en tablas masivas.</td><td><code>visitas BIGINT</code></td></tr>
+    <tr data-cat="num"><td><code>numeric</code> / <code>decimal</code></td><td><span class="badge badge-num">Número</span></td><td>Precisión exacta. Ideal para dinero y cálculos financieros.</td><td><code>precio NUMERIC(10,2)</code></td></tr>
+    <tr data-cat="num"><td><code>real</code></td><td><span class="badge badge-num">Número</span></td><td>Punto flotante de 4 bytes. Menos preciso, más rápido.</td><td><code>temperatura REAL</code></td></tr>
+    <tr data-cat="num"><td><code>double precision</code></td><td><span class="badge badge-num">Número</span></td><td>Punto flotante de 8 bytes. Científico y estadístico.</td><td><code>latitud DOUBLE PRECISION</code></td></tr>
+    <tr data-cat="num"><td><code>serial</code></td><td><span class="badge badge-num">Número</span></td><td>Entero autoincremental. Clásico para claves primarias.</td><td><code>id SERIAL PRIMARY KEY</code></td></tr>
+    <tr data-cat="num"><td><code>bigserial</code></td><td><span class="badge badge-num">Número</span></td><td>Autoincremental grande. Para tablas con millones de filas.</td><td><code>id BIGSERIAL PRIMARY KEY</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Texto y caracteres</td></tr>
+    <tr data-cat="str"><td><code>char(n)</code></td><td><span class="badge badge-str">Texto</span></td><td>Longitud fija. Rellena con espacios. Para códigos fijos.</td><td><code>codigo CHAR(3)</code></td></tr>
+    <tr data-cat="str"><td><code>varchar(n)</code></td><td><span class="badge badge-str">Texto</span></td><td>Longitud variable con límite. Campos de formulario.</td><td><code>nombre VARCHAR(100)</code></td></tr>
+    <tr data-cat="str"><td><code>text</code></td><td><span class="badge badge-str">Texto</span></td><td>Sin límite de longitud. Descripciones, artículos, logs.</td><td><code>contenido TEXT</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Fecha y hora</td></tr>
+    <tr data-cat="date"><td><code>date</code></td><td><span class="badge badge-date">Fecha</span></td><td>Solo fecha (año-mes-día), sin hora.</td><td><code>nacimiento DATE</code></td></tr>
+    <tr data-cat="date"><td><code>time</code></td><td><span class="badge badge-date">Fecha</span></td><td>Solo hora del día, sin fecha.</td><td><code>hora_apertura TIME</code></td></tr>
+    <tr data-cat="date"><td><code>timestamp</code></td><td><span class="badge badge-date">Fecha</span></td><td>Fecha + hora sin zona horaria. Timestamps locales.</td><td><code>creado_en TIMESTAMP</code></td></tr>
+    <tr data-cat="date"><td><code>timestamptz</code></td><td><span class="badge badge-date">Fecha</span></td><td>Fecha + hora con zona horaria. Recomendado para APIs.</td><td><code>actualizado TIMESTAMPTZ</code></td></tr>
+    <tr data-cat="date"><td><code>interval</code></td><td><span class="badge badge-date">Fecha</span></td><td>Duración de tiempo. Para calcular diferencias o plazos.</td><td><code>duracion INTERVAL</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Booleano</td></tr>
+    <tr data-cat="bool"><td><code>boolean</code></td><td><span class="badge badge-bool">Booleano</span></td><td>Verdadero/falso/nulo. Flags, estados activos/inactivos.</td><td><code>activo BOOLEAN DEFAULT true</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Binario</td></tr>
+    <tr data-cat="bin"><td><code>bytea</code></td><td><span class="badge badge-bin">Binario</span></td><td>Datos binarios crudos. Archivos, imágenes pequeñas, hashes.</td><td><code>imagen BYTEA</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">JSON</td></tr>
+    <tr data-cat="json"><td><code>json</code></td><td><span class="badge badge-json">JSON</span></td><td>Almacena JSON como texto. Valida sintaxis al insertar.</td><td><code>config JSON</code></td></tr>
+    <tr data-cat="json"><td><code>jsonb</code></td><td><span class="badge badge-json">JSON</span></td><td>JSON binario indexable. Más eficiente para consultas.</td><td><code>metadata JSONB</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Red</td></tr>
+    <tr data-cat="net"><td><code>inet</code></td><td><span class="badge badge-net">Red</span></td><td>Dirección IPv4 o IPv6 con máscara opcional.</td><td><code>ip_cliente INET</code></td></tr>
+    <tr data-cat="net"><td><code>cidr</code></td><td><span class="badge badge-net">Red</span></td><td>Rango de red (bloque CIDR). Para reglas de firewall.</td><td><code>subred CIDR</code></td></tr>
+    <tr data-cat="net"><td><code>macaddr</code></td><td><span class="badge badge-net">Red</span></td><td>Dirección MAC de tarjeta de red.</td><td><code>mac MACADDR</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Identificadores</td></tr>
+    <tr data-cat="spec"><td><code>uuid</code></td><td><span class="badge badge-spec">Especial</span></td><td>Identificador único universal de 128 bits. Ideal para sistemas distribuidos.</td><td><code>id UUID DEFAULT gen_random_uuid()</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Arrays</td></tr>
+    <tr data-cat="spec"><td><code>tipo[]</code></td><td><span class="badge badge-spec">Especial</span></td><td>Array de cualquier tipo. Etiquetas, permisos, listas.</td><td><code>tags TEXT[]</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Enumerados</td></tr>
+    <tr data-cat="spec"><td><code>enum</code></td><td><span class="badge badge-spec">Especial</span></td><td>Lista cerrada de valores. Estados, roles, categorías fijas.</td><td><code>estado tipo_estado</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Geométricos</td></tr>
+    <tr data-cat="geo"><td><code>point</code></td><td><span class="badge badge-geo">Geo</span></td><td>Punto (x, y). Coordenadas simples.</td><td><code>ubicacion POINT</code></td></tr>
+    <tr data-cat="geo"><td><code>polygon</code></td><td><span class="badge badge-geo">Geo</span></td><td>Polígono cerrado. Zonas geográficas básicas.</td><td><code>area POLYGON</code></td></tr>
+
+  </tbody>
+</table>
+
+<script>
+function filtrar(q) {
+  q = q.toLowerCase();
+  const rows = document.querySelectorAll('#tabla tbody tr');
+  let lastCat = null;
+  rows.forEach(row => {
+    if (row.classList.contains('cat-header')) {
+      lastCat = row;
+      row.classList.add('hidden');
+    } else {
+      const txt = row.textContent.toLowerCase();
+      if (txt.includes(q)) {
+        row.classList.remove('hidden');
+        if (lastCat) lastCat.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    }
+  });
+}
+</script>

@@ -1,0 +1,113 @@
+
+<style>
+  .pg-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .pg-table th { background: var(--color-background-secondary); color: var(--color-text-secondary); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--color-border-primary); }
+  .pg-table td { padding: 7px 12px; border-bottom: 1px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: middle; }
+  .pg-table tr:last-child td { border-bottom: none; }
+  .pg-table tr:hover td { background: var(--color-background-secondary); }
+  .cat-header td { background: var(--color-background-secondary); font-weight: 500; font-size: 12px; color: var(--color-text-secondary); padding: 5px 12px; border-bottom: 1px solid var(--color-border-secondary); }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .badge-num   { background: #E6F1FB; color: #0C447C; }
+  .badge-str   { background: #E1F5EE; color: #085041; }
+  .badge-date  { background: #FAEEDA; color: #633806; }
+  .badge-bool  { background: #EEEDFE; color: #3C3489; }
+  .badge-bin   { background: #FAECE7; color: #712B13; }
+  .badge-json  { background: #EAF3DE; color: #27500A; }
+  .badge-spec  { background: #F1EFE8; color: #444441; }
+  @media (prefers-color-scheme: dark) {
+    .badge-num  { background: #0C447C; color: #B5D4F4; }
+    .badge-str  { background: #085041; color: #9FE1CB; }
+    .badge-date { background: #633806; color: #FAC775; }
+    .badge-bool { background: #3C3489; color: #CECBF6; }
+    .badge-bin  { background: #712B13; color: #F5C4B3; }
+    .badge-json { background: #27500A; color: #C0DD97; }
+    .badge-spec { background: #444441; color: #D3D1C7; }
+  }
+  code { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); }
+  .search-box { width: 100%; box-sizing: border-box; padding: 7px 12px; border: 1px solid var(--color-border-secondary); border-radius: 8px; font-size: 13px; background: var(--color-background-primary); color: var(--color-text-primary); margin-bottom: 12px; outline: none; }
+  .search-box:focus { border-color: var(--color-border-primary); }
+  .hidden { display: none; }
+</style>
+
+<input class="search-box" type="text" placeholder="Buscar tipo de dato..." oninput="filtrar(this.value)">
+
+<table class="pg-table" id="tabla">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Categoría</th>
+      <th>Uso</th>
+      <th>Ejemplo</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="cat-header"><td colspan="4">Numéricos enteros</td></tr>
+    <tr data-cat="num"><td><code>TINYINT</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros muy pequeños (-128 a 127). Flags, estados simples.</td><td><code>activo TINYINT(1)</code></td></tr>
+    <tr data-cat="num"><td><code>SMALLINT</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros pequeños (-32768 a 32767). Ahorra espacio.</td><td><code>edad SMALLINT</code></td></tr>
+    <tr data-cat="num"><td><code>MEDIUMINT</code></td><td><span class="badge badge-num">Número</span></td><td>Rango medio (-8M a 8M). Poco común, entre SMALLINT y INT.</td><td><code>visitas MEDIUMINT</code></td></tr>
+    <tr data-cat="num"><td><code>INT</code> / <code>INTEGER</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros estándar. El más usado para IDs y contadores.</td><td><code>id INT</code></td></tr>
+    <tr data-cat="num"><td><code>BIGINT</code></td><td><span class="badge badge-num">Número</span></td><td>Enteros muy grandes. Para IDs en tablas masivas.</td><td><code>id BIGINT AUTO_INCREMENT</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Numéricos decimales</td></tr>
+    <tr data-cat="num"><td><code>DECIMAL</code> / <code>NUMERIC</code></td><td><span class="badge badge-num">Número</span></td><td>Precisión exacta. Ideal para dinero y cálculos financieros.</td><td><code>precio DECIMAL(10,2)</code></td></tr>
+    <tr data-cat="num"><td><code>FLOAT</code></td><td><span class="badge badge-num">Número</span></td><td>Punto flotante de 4 bytes. Menos preciso, más rápido.</td><td><code>temperatura FLOAT</code></td></tr>
+    <tr data-cat="num"><td><code>DOUBLE</code></td><td><span class="badge badge-num">Número</span></td><td>Punto flotante de 8 bytes. Científico y estadístico.</td><td><code>latitud DOUBLE</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Texto y caracteres</td></tr>
+    <tr data-cat="str"><td><code>CHAR(n)</code></td><td><span class="badge badge-str">Texto</span></td><td>Longitud fija. Rellena con espacios. Para códigos fijos.</td><td><code>codigo CHAR(3)</code></td></tr>
+    <tr data-cat="str"><td><code>VARCHAR(n)</code></td><td><span class="badge badge-str">Texto</span></td><td>Longitud variable con límite máximo de 65535. Campos de formulario.</td><td><code>nombre VARCHAR(100)</code></td></tr>
+    <tr data-cat="str"><td><code>TINYTEXT</code></td><td><span class="badge badge-str">Texto</span></td><td>Texto muy corto, máximo 255 caracteres.</td><td><code>resumen TINYTEXT</code></td></tr>
+    <tr data-cat="str"><td><code>TEXT</code></td><td><span class="badge badge-str">Texto</span></td><td>Texto mediano hasta 65535 caracteres. Descripciones, comentarios.</td><td><code>descripcion TEXT</code></td></tr>
+    <tr data-cat="str"><td><code>MEDIUMTEXT</code></td><td><span class="badge badge-str">Texto</span></td><td>Texto largo hasta 16MB. Artículos, documentos.</td><td><code>contenido MEDIUMTEXT</code></td></tr>
+    <tr data-cat="str"><td><code>LONGTEXT</code></td><td><span class="badge badge-str">Texto</span></td><td>Texto muy largo hasta 4GB. Logs, contenido masivo.</td><td><code>log LONGTEXT</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Fecha y hora</td></tr>
+    <tr data-cat="date"><td><code>DATE</code></td><td><span class="badge badge-date">Fecha</span></td><td>Solo fecha (año-mes-día), sin hora.</td><td><code>nacimiento DATE</code></td></tr>
+    <tr data-cat="date"><td><code>TIME</code></td><td><span class="badge badge-date">Fecha</span></td><td>Solo hora del día, sin fecha.</td><td><code>hora_apertura TIME</code></td></tr>
+    <tr data-cat="date"><td><code>DATETIME</code></td><td><span class="badge badge-date">Fecha</span></td><td>Fecha + hora sin zona horaria. Rango 1000 a 9999.</td><td><code>creado_en DATETIME</code></td></tr>
+    <tr data-cat="date"><td><code>TIMESTAMP</code></td><td><span class="badge badge-date">Fecha</span></td><td>Fecha + hora con zona horaria. Rango 1970 a 2038.</td><td><code>actualizado TIMESTAMP DEFAULT NOW()</code></td></tr>
+    <tr data-cat="date"><td><code>YEAR</code></td><td><span class="badge badge-date">Fecha</span></td><td>Solo el año (4 dígitos). Para año de publicación, graduación, etc.</td><td><code>anio_publicacion YEAR</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Booleano</td></tr>
+    <tr data-cat="bool"><td><code>BOOLEAN</code> / <code>BOOL</code></td><td><span class="badge badge-bool">Booleano</span></td><td>Alias de TINYINT(1). 0 = falso, 1 = verdadero.</td><td><code>activo BOOLEAN DEFAULT 1</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Binario</td></tr>
+    <tr data-cat="bin"><td><code>BINARY(n)</code></td><td><span class="badge badge-bin">Binario</span></td><td>Bytes de longitud fija. Similar a CHAR pero en binario.</td><td><code>hash BINARY(16)</code></td></tr>
+    <tr data-cat="bin"><td><code>VARBINARY(n)</code></td><td><span class="badge badge-bin">Binario</span></td><td>Bytes de longitud variable. Hashes, tokens.</td><td><code>token VARBINARY(255)</code></td></tr>
+    <tr data-cat="bin"><td><code>TINYBLOB</code></td><td><span class="badge badge-bin">Binario</span></td><td>Datos binarios hasta 255 bytes.</td><td><code>icono TINYBLOB</code></td></tr>
+    <tr data-cat="bin"><td><code>BLOB</code></td><td><span class="badge badge-bin">Binario</span></td><td>Datos binarios hasta 65KB. Imágenes pequeñas, archivos.</td><td><code>imagen BLOB</code></td></tr>
+    <tr data-cat="bin"><td><code>MEDIUMBLOB</code></td><td><span class="badge badge-bin">Binario</span></td><td>Datos binarios hasta 16MB. Archivos medianos.</td><td><code>archivo MEDIUMBLOB</code></td></tr>
+    <tr data-cat="bin"><td><code>LONGBLOB</code></td><td><span class="badge badge-bin">Binario</span></td><td>Datos binarios hasta 4GB. Videos, archivos grandes.</td><td><code>video LONGBLOB</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">JSON</td></tr>
+    <tr data-cat="json"><td><code>JSON</code></td><td><span class="badge badge-json">JSON</span></td><td>Almacena JSON validado. Disponible desde MySQL 5.7.</td><td><code>metadata JSON</code></td></tr>
+
+    <tr class="cat-header"><td colspan="4">Especiales</td></tr>
+    <tr data-cat="spec"><td><code>ENUM</code></td><td><span class="badge badge-spec">Especial</span></td><td>Lista cerrada de valores. Estados, roles, categorías fijas.</td><td><code>genero ENUM('M','F','Otro')</code></td></tr>
+    <tr data-cat="spec"><td><code>SET</code></td><td><span class="badge badge-spec">Especial</span></td><td>Permite múltiples valores de una lista. Permisos, etiquetas.</td><td><code>permisos SET('leer','escribir','admin')</code></td></tr>
+
+  </tbody>
+</table>
+
+<script>
+function filtrar(q) {
+  q = q.toLowerCase();
+  const rows = document.querySelectorAll('#tabla tbody tr');
+  let lastCat = null;
+  rows.forEach(row => {
+    if (row.classList.contains('cat-header')) {
+      lastCat = row;
+      row.classList.add('hidden');
+    } else {
+      const txt = row.textContent.toLowerCase();
+      if (txt.includes(q)) {
+        row.classList.remove('hidden');
+        if (lastCat) lastCat.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    }
+  });
+}
+</script>
