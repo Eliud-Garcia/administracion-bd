@@ -32,13 +32,6 @@ db.tabla.insertOne({ nombre: "ejemplo", direccion : {ciudad : "florencia", barri
 
 // simular una relacion de muchos a muchos
 
-db.createCollection("persona")
-
-db.createCollection("hobby")
-
-db.createCollection("persona_hobby")
-
-
 db.persona.insertOne(
     {nombre: "jhonnier", apellido : "garcia",
     hobbies : [
@@ -61,6 +54,7 @@ db.tipo_cliente.insertMany([
 
 db.createCollection("cliente")
 
+//asociar una persona a un tipo de cliente
 db.cliente.insertMany([
     {nombre : "jhonnier", apellido : "garcia", tipo_cli : ObjectId('69fcb54cabd65e29e4abc118')},
     {nombre : "pepe", apellido : "perez", tipo_cli : ObjectId('69fcb54cabd65e29e4abc11a')},
@@ -78,8 +72,6 @@ db.cliente.aggregate([
   }
 ])
 
-
-// actualizar los registros existentes
-// consultar los nuevos valores
-// contar para cada tipo de cliente cuantos clientes tiene
-// traer el nombre, apellido y el tipo de cliente (sin informacion adicional)
+db.usuarios.insertOne(
+  {nombre : "Juan", apellido : "Gonzales", tipo_cli : ObjectId('69fcb54cabd65e29e4abc11a')}
+)
