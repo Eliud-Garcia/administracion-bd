@@ -1,0 +1,89 @@
+{
+  "db": "PostgreSQL",
+  "version": "16.x",
+  "categories": [
+    {
+      "label": "Numéricos",
+      "types": [
+        { "type": "smallint",          "cat": "num",  "badge": "Número",   "uso": "Enteros pequeños (-32768 a 32767). Ahorra espacio.",                           "ejemplo": "edad SMALLINT" },
+        { "type": "integer / int",     "cat": "num",  "badge": "Número",   "uso": "Enteros estándar. El más usado para IDs y contadores.",                        "ejemplo": "id INT" },
+        { "type": "bigint",            "cat": "num",  "badge": "Número",   "uso": "Enteros muy grandes. Para IDs en tablas masivas.",                             "ejemplo": "visitas BIGINT" },
+        { "type": "numeric / decimal", "cat": "num",  "badge": "Número",   "uso": "Precisión exacta. Ideal para dinero y cálculos financieros.",                  "ejemplo": "precio NUMERIC(10,2)" },
+        { "type": "real",              "cat": "num",  "badge": "Número",   "uso": "Punto flotante de 4 bytes. Menos preciso, más rápido.",                        "ejemplo": "temperatura REAL" },
+        { "type": "double precision",  "cat": "num",  "badge": "Número",   "uso": "Punto flotante de 8 bytes. Científico y estadístico.",                         "ejemplo": "latitud DOUBLE PRECISION" },
+        { "type": "serial",            "cat": "num",  "badge": "Número",   "uso": "Entero autoincremental. Clásico para claves primarias.",                       "ejemplo": "id SERIAL PRIMARY KEY" },
+        { "type": "bigserial",         "cat": "num",  "badge": "Número",   "uso": "Autoincremental grande. Para tablas con millones de filas.",                   "ejemplo": "id BIGSERIAL PRIMARY KEY" }
+      ]
+    },
+    {
+      "label": "Texto y caracteres",
+      "types": [
+        { "type": "char(n)",           "cat": "str",  "badge": "Texto",    "uso": "Longitud fija. Rellena con espacios. Para códigos fijos.",                     "ejemplo": "codigo CHAR(3)" },
+        { "type": "varchar(n)",        "cat": "str",  "badge": "Texto",    "uso": "Longitud variable con límite. Campos de formulario.",                          "ejemplo": "nombre VARCHAR(100)" },
+        { "type": "text",              "cat": "str",  "badge": "Texto",    "uso": "Sin límite de longitud. Descripciones, artículos, logs.",                      "ejemplo": "contenido TEXT" }
+      ]
+    },
+    {
+      "label": "Fecha y hora",
+      "types": [
+        { "type": "date",              "cat": "date", "badge": "Fecha",    "uso": "Solo fecha (año-mes-día), sin hora.",                                          "ejemplo": "nacimiento DATE" },
+        { "type": "time",              "cat": "date", "badge": "Fecha",    "uso": "Solo hora del día, sin fecha.",                                                "ejemplo": "hora_apertura TIME" },
+        { "type": "timestamp",         "cat": "date", "badge": "Fecha",    "uso": "Fecha + hora sin zona horaria. Timestamps locales.",                           "ejemplo": "creado_en TIMESTAMP" },
+        { "type": "timestamptz",       "cat": "date", "badge": "Fecha",    "uso": "Fecha + hora con zona horaria. Recomendado para APIs.",                        "ejemplo": "actualizado TIMESTAMPTZ" },
+        { "type": "interval",          "cat": "date", "badge": "Fecha",    "uso": "Duración de tiempo. Para calcular diferencias o plazos.",                      "ejemplo": "duracion INTERVAL" }
+      ]
+    },
+    {
+      "label": "Booleano",
+      "types": [
+        { "type": "boolean",           "cat": "bool", "badge": "Booleano", "uso": "Verdadero/falso/nulo. Flags, estados activos/inactivos.",                      "ejemplo": "activo BOOLEAN DEFAULT true" }
+      ]
+    },
+    {
+      "label": "Binario",
+      "types": [
+        { "type": "bytea",             "cat": "bin",  "badge": "Binario",  "uso": "Datos binarios crudos. Archivos, imágenes pequeñas, hashes.",                  "ejemplo": "imagen BYTEA" }
+      ]
+    },
+    {
+      "label": "JSON",
+      "types": [
+        { "type": "json",              "cat": "json", "badge": "JSON",     "uso": "Almacena JSON como texto. Valida sintaxis al insertar.",                       "ejemplo": "config JSON" },
+        { "type": "jsonb",             "cat": "json", "badge": "JSON",     "uso": "JSON binario indexable. Más eficiente para consultas.",                        "ejemplo": "metadata JSONB" }
+      ]
+    },
+    {
+      "label": "Red",
+      "types": [
+        { "type": "inet",              "cat": "net",  "badge": "Red",      "uso": "Dirección IPv4 o IPv6 con máscara opcional.",                                  "ejemplo": "ip_cliente INET" },
+        { "type": "cidr",              "cat": "net",  "badge": "Red",      "uso": "Rango de red (bloque CIDR). Para reglas de firewall.",                         "ejemplo": "subred CIDR" },
+        { "type": "macaddr",           "cat": "net",  "badge": "Red",      "uso": "Dirección MAC de tarjeta de red.",                                             "ejemplo": "mac MACADDR" }
+      ]
+    },
+    {
+      "label": "Identificadores",
+      "types": [
+        { "type": "uuid",              "cat": "spec", "badge": "Especial", "uso": "Identificador único universal de 128 bits. Ideal para sistemas distribuidos.", "ejemplo": "id UUID DEFAULT gen_random_uuid()" }
+      ]
+    },
+    {
+      "label": "Arrays",
+      "types": [
+        { "type": "tipo[]",            "cat": "spec", "badge": "Especial", "uso": "Array de cualquier tipo. Etiquetas, permisos, listas.",                        "ejemplo": "tags TEXT[]" }
+      ]
+    },
+    {
+      "label": "Enumerados",
+      "types": [
+        { "type": "enum",              "cat": "spec", "badge": "Especial", "uso": "Lista cerrada de valores. Estados, roles, categorías fijas.",                  "ejemplo": "estado tipo_estado" }
+      ]
+    },
+    {
+      "label": "Geométricos",
+      "types": [
+        { "type": "point",             "cat": "geo",  "badge": "Geo",      "uso": "Punto (x, y). Coordenadas simples.",                                           "ejemplo": "ubicacion POINT" },
+        { "type": "polygon",           "cat": "geo",  "badge": "Geo",      "uso": "Polígono cerrado. Zonas geográficas básicas.",                                 "ejemplo": "area POLYGON" }
+      ]
+    }
+  ]
+}

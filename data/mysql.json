@@ -1,0 +1,75 @@
+{
+  "db": "MySQL",
+  "version": "8.x",
+  "categories": [
+    {
+      "label": "Numéricos enteros",
+      "types": [
+        { "type": "TINYINT",           "cat": "num", "badge": "Número",   "uso": "Enteros muy pequeños (-128 a 127). Flags, estados simples.", "ejemplo": "activo TINYINT(1)" },
+        { "type": "SMALLINT",          "cat": "num", "badge": "Número",   "uso": "Enteros pequeños (-32768 a 32767). Ahorra espacio.",          "ejemplo": "edad SMALLINT" },
+        { "type": "MEDIUMINT",         "cat": "num", "badge": "Número",   "uso": "Rango medio (-8M a 8M). Poco común, entre SMALLINT y INT.",   "ejemplo": "visitas MEDIUMINT" },
+        { "type": "INT / INTEGER",     "cat": "num", "badge": "Número",   "uso": "Enteros estándar. El más usado para IDs y contadores.",        "ejemplo": "id INT" },
+        { "type": "BIGINT",            "cat": "num", "badge": "Número",   "uso": "Enteros muy grandes. Para IDs en tablas masivas.",             "ejemplo": "id BIGINT AUTO_INCREMENT" }
+      ]
+    },
+    {
+      "label": "Numéricos decimales",
+      "types": [
+        { "type": "DECIMAL / NUMERIC", "cat": "num", "badge": "Número",   "uso": "Precisión exacta. Ideal para dinero y cálculos financieros.",  "ejemplo": "precio DECIMAL(10,2)" },
+        { "type": "FLOAT",             "cat": "num", "badge": "Número",   "uso": "Punto flotante de 4 bytes. Menos preciso, más rápido.",         "ejemplo": "temperatura FLOAT" },
+        { "type": "DOUBLE",            "cat": "num", "badge": "Número",   "uso": "Punto flotante de 8 bytes. Científico y estadístico.",          "ejemplo": "latitud DOUBLE" }
+      ]
+    },
+    {
+      "label": "Texto y caracteres",
+      "types": [
+        { "type": "CHAR(n)",           "cat": "str", "badge": "Texto",    "uso": "Longitud fija. Rellena con espacios. Para códigos fijos.",      "ejemplo": "codigo CHAR(3)" },
+        { "type": "VARCHAR(n)",        "cat": "str", "badge": "Texto",    "uso": "Longitud variable con límite máximo de 65535. Campos de formulario.", "ejemplo": "nombre VARCHAR(100)" },
+        { "type": "TINYTEXT",          "cat": "str", "badge": "Texto",    "uso": "Texto muy corto, máximo 255 caracteres.",                       "ejemplo": "resumen TINYTEXT" },
+        { "type": "TEXT",              "cat": "str", "badge": "Texto",    "uso": "Texto mediano hasta 65535 caracteres. Descripciones, comentarios.", "ejemplo": "descripcion TEXT" },
+        { "type": "MEDIUMTEXT",        "cat": "str", "badge": "Texto",    "uso": "Texto largo hasta 16MB. Artículos, documentos.",                "ejemplo": "contenido MEDIUMTEXT" },
+        { "type": "LONGTEXT",          "cat": "str", "badge": "Texto",    "uso": "Texto muy largo hasta 4GB. Logs, contenido masivo.",            "ejemplo": "log LONGTEXT" }
+      ]
+    },
+    {
+      "label": "Fecha y hora",
+      "types": [
+        { "type": "DATE",              "cat": "date", "badge": "Fecha",   "uso": "Solo fecha (año-mes-día), sin hora.",                          "ejemplo": "nacimiento DATE" },
+        { "type": "TIME",              "cat": "date", "badge": "Fecha",   "uso": "Solo hora del día, sin fecha.",                                "ejemplo": "hora_apertura TIME" },
+        { "type": "DATETIME",          "cat": "date", "badge": "Fecha",   "uso": "Fecha + hora sin zona horaria. Rango 1000 a 9999.",            "ejemplo": "creado_en DATETIME" },
+        { "type": "TIMESTAMP",         "cat": "date", "badge": "Fecha",   "uso": "Fecha + hora con zona horaria. Rango 1970 a 2038.",            "ejemplo": "actualizado TIMESTAMP DEFAULT NOW()" },
+        { "type": "YEAR",              "cat": "date", "badge": "Fecha",   "uso": "Solo el año (4 dígitos). Para año de publicación, graduación, etc.", "ejemplo": "anio_publicacion YEAR" }
+      ]
+    },
+    {
+      "label": "Booleano",
+      "types": [
+        { "type": "BOOLEAN / BOOL",    "cat": "bool", "badge": "Booleano", "uso": "Alias de TINYINT(1). 0 = falso, 1 = verdadero.",             "ejemplo": "activo BOOLEAN DEFAULT 1" }
+      ]
+    },
+    {
+      "label": "Binario",
+      "types": [
+        { "type": "BINARY(n)",         "cat": "bin", "badge": "Binario",  "uso": "Bytes de longitud fija. Similar a CHAR pero en binario.",      "ejemplo": "hash BINARY(16)" },
+        { "type": "VARBINARY(n)",      "cat": "bin", "badge": "Binario",  "uso": "Bytes de longitud variable. Hashes, tokens.",                  "ejemplo": "token VARBINARY(255)" },
+        { "type": "TINYBLOB",          "cat": "bin", "badge": "Binario",  "uso": "Datos binarios hasta 255 bytes.",                              "ejemplo": "icono TINYBLOB" },
+        { "type": "BLOB",              "cat": "bin", "badge": "Binario",  "uso": "Datos binarios hasta 65KB. Imágenes pequeñas, archivos.",      "ejemplo": "imagen BLOB" },
+        { "type": "MEDIUMBLOB",        "cat": "bin", "badge": "Binario",  "uso": "Datos binarios hasta 16MB. Archivos medianos.",                "ejemplo": "archivo MEDIUMBLOB" },
+        { "type": "LONGBLOB",          "cat": "bin", "badge": "Binario",  "uso": "Datos binarios hasta 4GB. Videos, archivos grandes.",          "ejemplo": "video LONGBLOB" }
+      ]
+    },
+    {
+      "label": "JSON",
+      "types": [
+        { "type": "JSON",              "cat": "json", "badge": "JSON",    "uso": "Almacena JSON validado. Disponible desde MySQL 5.7.",          "ejemplo": "metadata JSON" }
+      ]
+    },
+    {
+      "label": "Especiales",
+      "types": [
+        { "type": "ENUM",              "cat": "spec", "badge": "Especial", "uso": "Lista cerrada de valores. Estados, roles, categorías fijas.", "ejemplo": "genero ENUM('M','F','Otro')" },
+        { "type": "SET",               "cat": "spec", "badge": "Especial", "uso": "Permite múltiples valores de una lista. Permisos, etiquetas.", "ejemplo": "permisos SET('leer','escribir','admin')" }
+      ]
+    }
+  ]
+}

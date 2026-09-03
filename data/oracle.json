@@ -1,0 +1,75 @@
+{
+  "db": "Oracle",
+  "version": "21c / 23c",
+  "categories": [
+    {
+      "label": "Numéricos",
+      "types": [
+        { "type": "NUMBER(p,s)",              "cat": "num",  "badge": "Número",   "uso": "Tipo numérico universal. p = precisión total, s = decimales. Para dinero, cantidades e IDs.", "ejemplo": "precio NUMBER(10,2)" },
+        { "type": "INTEGER",                  "cat": "num",  "badge": "Número",   "uso": "Alias de NUMBER(38). Enteros sin decimales. Estándar ANSI SQL.",                               "ejemplo": "cantidad INTEGER" },
+        { "type": "SMALLINT",                 "cat": "num",  "badge": "Número",   "uso": "Alias de NUMBER(38). Entero pequeño. Compatible con estándar SQL.",                            "ejemplo": "edad SMALLINT" },
+        { "type": "FLOAT(p)",                 "cat": "num",  "badge": "Número",   "uso": "Subtipo de NUMBER con precisión en binario. Para cálculos científicos.",                       "ejemplo": "resultado FLOAT(10)" },
+        { "type": "BINARY_FLOAT",             "cat": "num",  "badge": "Número",   "uso": "Punto flotante IEEE 754 de 32 bits. Más rápido que NUMBER.",                                   "ejemplo": "temp BINARY_FLOAT" },
+        { "type": "BINARY_DOUBLE",            "cat": "num",  "badge": "Número",   "uso": "Punto flotante IEEE 754 de 64 bits. Alta precisión y rendimiento.",                            "ejemplo": "latitud BINARY_DOUBLE" },
+        { "type": "DECIMAL(p,s)",             "cat": "num",  "badge": "Número",   "uso": "Alias de NUMBER(p,s). Compatibilidad con el estándar ANSI SQL.",                               "ejemplo": "saldo DECIMAL(15,4)" }
+      ]
+    },
+    {
+      "label": "Texto y caracteres",
+      "types": [
+        { "type": "VARCHAR2(n)",              "cat": "str",  "badge": "Texto",    "uso": "Cadena variable. El tipo de texto más común en Oracle. Obligatorio indicar tamaño.", "ejemplo": "nombre VARCHAR2(100)" },
+        { "type": "CHAR(n)",                  "cat": "str",  "badge": "Texto",    "uso": "Longitud fija. Rellena con espacios. Para códigos o valores de tamaño siempre igual.", "ejemplo": "codigo CHAR(3)" },
+        { "type": "NVARCHAR2(n)",             "cat": "str",  "badge": "Texto",    "uso": "VARCHAR2 con soporte Unicode (AL16UTF16 / UTF8). Texto multilingüe.",                "ejemplo": "descripcion NVARCHAR2(200)" },
+        { "type": "NCHAR(n)",                 "cat": "str",  "badge": "Texto",    "uso": "CHAR de longitud fija con soporte Unicode. Para códigos internacionales.",           "ejemplo": "pais NCHAR(2)" }
+      ]
+    },
+    {
+      "label": "Fecha y hora",
+      "types": [
+        { "type": "DATE",                     "cat": "date", "badge": "Fecha",    "uso": "Fecha y hora (sin fracciones de segundo). El tipo temporal más usado en Oracle.",    "ejemplo": "nacimiento DATE" },
+        { "type": "TIMESTAMP(fs)",            "cat": "date", "badge": "Fecha",    "uso": "Fecha y hora con fracciones de segundo de hasta 9 dígitos.",                        "ejemplo": "creado_en TIMESTAMP(6)" },
+        { "type": "TIMESTAMP WITH TIME ZONE", "cat": "date", "badge": "Fecha",    "uso": "TIMESTAMP con información de huso horario. Para aplicaciones globales.",            "ejemplo": "evento TIMESTAMP WITH TIME ZONE" },
+        { "type": "TIMESTAMP WITH LOCAL TIME ZONE", "cat": "date", "badge": "Fecha", "uso": "TIMESTAMP normalizado al huso horario de la base de datos al consultar.",       "ejemplo": "log_ts TIMESTAMP WITH LOCAL TIME ZONE" },
+        { "type": "INTERVAL YEAR TO MONTH",   "cat": "date", "badge": "Fecha",    "uso": "Período expresado en años y meses. Para plazos y contratos.",                       "ejemplo": "vigencia INTERVAL YEAR(2) TO MONTH" },
+        { "type": "INTERVAL DAY TO SECOND",   "cat": "date", "badge": "Fecha",    "uso": "Período en días, horas, minutos y segundos. Para duraciones exactas.",              "ejemplo": "tiempo INTERVAL DAY TO SECOND" }
+      ]
+    },
+    {
+      "label": "Large Objects (LOB)",
+      "types": [
+        { "type": "CLOB",                     "cat": "lob",  "badge": "LOB",      "uso": "Character Large Object. Texto muy largo: documentos, logs, XML, HTML. Hasta 128 TB.", "ejemplo": "contenido CLOB" },
+        { "type": "NCLOB",                    "cat": "lob",  "badge": "LOB",      "uso": "CLOB con soporte Unicode. Para texto largo en múltiples idiomas.",                  "ejemplo": "descripcion NCLOB" },
+        { "type": "BLOB",                     "cat": "lob",  "badge": "LOB",      "uso": "Binary Large Object. Imágenes, archivos, multimedia. Hasta 128 TB.",               "ejemplo": "imagen BLOB" },
+        { "type": "BFILE",                    "cat": "lob",  "badge": "LOB",      "uso": "Apuntador a archivo externo en el sistema de archivos del servidor. Solo lectura.", "ejemplo": "doc BFILE" }
+      ]
+    },
+    {
+      "label": "Binario / RAW",
+      "types": [
+        { "type": "RAW(n)",                   "cat": "bin",  "badge": "Binario",  "uso": "Datos binarios de longitud variable. Sin conversión de charset. Máx. 2000 bytes.", "ejemplo": "hash RAW(32)" },
+        { "type": "LONG RAW",                 "cat": "bin",  "badge": "Binario",  "uso": "Binario hasta 2 GB. Obsoleto — usar BLOB en diseños nuevos.",                     "ejemplo": "datos LONG RAW" }
+      ]
+    },
+    {
+      "label": "Identificadores y especiales",
+      "types": [
+        { "type": "ROWID",                    "cat": "spec", "badge": "Especial", "uso": "Dirección física única de una fila en la base de datos. Solo lectura.",           "ejemplo": "SELECT ROWID, nombre FROM empleados" },
+        { "type": "UROWID",                   "cat": "spec", "badge": "Especial", "uso": "Identificador universal de fila. Compatible con tablas index-organized y externas.", "ejemplo": "fila UROWID" },
+        { "type": "BOOLEAN",                  "cat": "spec", "badge": "Especial", "uso": "Verdadero/falso/nulo. En PL/SQL siempre; en SQL a partir de Oracle 23c.",         "ejemplo": "activo BOOLEAN DEFAULT TRUE" }
+      ]
+    },
+    {
+      "label": "XML y JSON",
+      "types": [
+        { "type": "XMLTYPE",                  "cat": "xml",  "badge": "XML/JSON", "uso": "Almacena documentos XML nativamente. Permite consultas XPath y XQuery.",          "ejemplo": "datos XMLTYPE" },
+        { "type": "JSON",                     "cat": "xml",  "badge": "XML/JSON", "uso": "Tipo nativo para documentos JSON. Almacenamiento y consulta eficiente (Oracle 21c+).", "ejemplo": "metadata JSON" }
+      ]
+    },
+    {
+      "label": "Obsoletos (evitar en diseños nuevos)",
+      "types": [
+        { "type": "LONG",                     "cat": "obs",  "badge": "Obsoleto", "uso": "Texto hasta 2 GB. Obsoleto — usar CLOB en su lugar.",                             "ejemplo": "notas LONG" }
+      ]
+    }
+  ]
+}
